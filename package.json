@@ -1,0 +1,23 @@
+{
+  "name": "json-server-mock-api",
+  "version": "1.0.0",
+  "description": "this is a mock api with json server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mark-nakachon/json-server-mock-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mark-nakachon/json-server-mock-api/issues"
+  },
+  "homepage": "https://github.com/mark-nakachon/json-server-mock-api#readme",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "json-server": "^0.15.1"
+  }
+}
