@@ -4,24 +4,37 @@ const jsonServer = require('json-server');
 const jwt = require('jsonwebtoken');
 const server = jsonServer.create();
 const router = jsonServer.router('./db.json')
+const middlewares = jsonServer.defaults();
 const userdb = JSON.parse(fs.readFileSync('./users.json','UTF-8'))
 const config = require('./config');
+const { check, validationResult } = require('express-validator');
 const tokenList = {}
 
 server.use(jsonServer.defaults());
 server.use(bodyParser.urlencoded({extended: true}))
 server.use(bodyParser.json())
+server.use(middlewares);
 
-function isAuthenticated({email, password}){
-    return userdb.users.findIndex(user => user.email === email && user.password === password) !== -1
+function isAuthenticated({email, password,applicationId}){
+    return userdb.users.findIndex(user => user.email === email && user.password === password && user.applicationId === applicationId) !== -1
 }
 
 server.post('/login',(req,res)=>{
-    const {email,password} = req.body;
-    const user = {
-        "email":email
+    req.checkBody('email', 'email is required').notEmpty();
+    req.checkBody('password', 'password is required').notEmpty();
+    req.checkBody('applicationId', 'app id is required').notEmpty();
+
+    let errors = req.validationErrors();
+    if (errors) {
+        res.send('There have been validation errors: ' + util.inspect(errors), 400);
+        return;
     }
-    if (isAuthenticated({email, password}) === false) {
+    const {email,password,applicationId} = req.body;
+
+    const user = {
+        "email":email,
+    }
+    if (isAuthenticated({email, password,applicationId}) === false) {
         const status = 401
         const message = 'Incorrect email or password'
         res.status(status).json({status, message})
@@ -36,10 +49,19 @@ server.post('/login',(req,res)=>{
       }
       tokenList[refreshToken] = response
       res.status(200).json(response);
-})
+    }
+)
 
 server.post('/token', (req,res) => {
     // refresh the damn token
+    req.checkBody('refreshToken', 'refreshToken is required').notEmpty();
+
+    let errors = req.validationErrors();
+
+    if (errors) {
+        res.send('There have been validation errors: ' + util.inspect(errors), 400);
+        return;
+    }
     const postData = req.body
     // if refresh token exists
     if((postData.refreshToken) && (postData.refreshToken in tokenList)) {

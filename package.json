@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mark-nakachon/json-server-mock-api#readme",
   "dependencies": {
+    "express-validator": "^6.2.0",
     "faker": "^4.1.0",
     "json-server": "^0.15.1",
     "jsonwebtoken": "^8.5.1",

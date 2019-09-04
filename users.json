@@ -4,13 +4,15 @@
       "id": 1,
       "name": "bruno",
       "email": "bruno@email.com",
-      "password": "bruno"
+      "password": "bruno",
+      "applicationId":"a43e7353-1bdf-43e3-b972-2c8856655f57"
     },
     {
       "id": 2,
       "name": "nilson",
       "email": "nilson@email.com",
-      "password": "nilson"
+      "password": "nilson",
+      "applicationId":"a43e7353-1bdf-43e3-b972-2c8856655f67"
     }
   ]
 }
