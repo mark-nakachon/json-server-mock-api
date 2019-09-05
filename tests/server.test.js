@@ -11,7 +11,7 @@ beforeAll((done) => {
     .post('/login')
     .send({
       email: config.email,
-      password: 'nilson',
+      password:config.password
     })
     .end((err, response) => {
       token = response.body.token; // save the token!
@@ -21,18 +21,18 @@ beforeAll((done) => {
 });
 
 describe('POST /login',()=>{
-    //send token with correct query parameter model - should respond with 200
+    //-pass email and password correcty should respond with 200
     test('It responds with JSON',async (done)=>{
         const response = await request.post('/login')
                         .send({
                             email:config.email,
-                            password: 'nilson',
+                            password:config.password,
                         })
         expect(response.status).toBe(200);
         expect(response.type).toBe('application/json');
         done()
         })
-    //send query parameter model parameter as empty
+    //send email and password as empty
     test('It responds with unprocessable entry',async (done)=>{
         const response = await request.post('/login')
                                .send({
@@ -42,7 +42,7 @@ describe('POST /login',()=>{
         expect(response.status).toBe(422);
         done()
     })
-    //send query param model that does not exist in the db.json (404 NOT Found)
+    //send email and passwords that are not in users.json (404 NOT Found)
 
     test('It responds with Not Found',async (done)=>{
         const response = await request.post('/login')
@@ -56,7 +56,7 @@ describe('POST /login',()=>{
 })
 
 describe('POST /token',()=>{
-    //send token with correct query parameter model - should respond with 200
+    //send refresh token  200
     test('It responds with JSON',async (done)=>{
         const response = await request.post('/token')
                         .send({
@@ -66,7 +66,7 @@ describe('POST /token',()=>{
         expect(response.type).toBe('application/json');
         done()
         })
-    //send query parameter model parameter as empty
+    //send refresh token as empty
     test('It responds with unprocessable entry',async (done)=>{
         const response = await request.post('/token')
                                .send({
@@ -155,7 +155,7 @@ describe('GET /api/search/order',()=>{
        expect(response.status).toBe(403);
        done()
     })
-    //send token with correct query parameters orderno and itemno - should respond with 200
+    //send token with correct query parameters orderno and itemno & search criteria- should respond with 200
     test('It responds with JSON',async (done)=>{
         const response = await request.get(`/api/search/order?orderno=${config.orderno}&itemno=${config.itemno}&model_like=${config.model}`)
                         .set('x-access-token',token)
@@ -163,7 +163,7 @@ describe('GET /api/search/order',()=>{
         expect(response.type).toBe('application/json');
         done()
         })
-    //send token with correct query parameters orderno and itemno - should respond with 200
+    //send token with correct query parameters orderno and itemno & search criteria - should respond with 200
     test('It responds with JSON',async (done)=>{
         const response = await request.get(`/api/search/order?orderno=${config.orderno}&itemno=${config.itemno}&IpAddress_like=${config.ipaddress}`)
                         .set('x-access-token',token)
