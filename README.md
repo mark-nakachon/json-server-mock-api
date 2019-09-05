@@ -16,6 +16,7 @@ There is already data provided in db.json and you can generate data using `node 
 
 
 Data for users is default and provided in `users.json` you need to use that data to login and you can also edit users.json 
+to include your own data
 
 
 ## Start Project
