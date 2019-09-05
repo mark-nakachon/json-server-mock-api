@@ -13,6 +13,8 @@ There are two config files present at `config.json` and `tests/config.json`
 
 ## Generating Data
 There is already data provided in db.json and you can generate data using `node generateData.json`this command adds the data in `db.json`
+
+
 Data for users is default and provided in `users.json` you need to use that data to login and you can also edit users.json 
 
 
